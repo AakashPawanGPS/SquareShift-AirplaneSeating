@@ -6,67 +6,37 @@ public class SquareShift {
         Scanner sc = new Scanner(System.in);
 
         //Getting user input as String
-        String input = sc.nextLine();
+        String seatInputs = sc.nextLine();
+        String passId = sc.nextLine();
 
-        //Input: [[3,4],[1,2]]
-        //Taking Integers from the input and appending them into the integer array called intArray
-        //intArray = [3 , 4 , 1 , 2]
-        int[] intArray = new int[input.length()];
-        int index=0;
-        for(int i=0;i<input.length();i++){
-            if(input.charAt(i)>='0' && input.charAt(i)<='9'){
-                intArray[index] = input.charAt(i);
-                index++;
-            }
-        }
+        //Parsing the input string into the required array format
+        //Creating 2D array
+        int[][] seatingGroups = ParseInputs.parseSeatSizeString(seatInputs);
 
-        int len = intArray.length;
+        //Making Passenger ID's into a 1D array
+        int[] passIdArray = ParseInputs.parsePassengerId(passId);
 
-        //Creating the seat grid using 2d array
-        int[][] grid = new int[1][len/2];
-        int idx=0;
-        for(int i=0;i<len/2;i++){
-            for(int j=0;j<2;j++){
-                grid[i][j] = intArray[idx];
-                idx++;
-            }
-        }
+        //Print to Check the 2d-Array Fromat
+//        for(int i[] : seatingGroups){
+//            for (int j : i){
+//                System.out.print(j+" ");
+//            }
+//            System.out.println("");
+//        }
 
-        //Creating a 3d array --> An array containing number of 2d arrays  (e.g) [[3,2],[4,3]]
-        int gridLen = grid.length;
-        int l=0;
-        int[][][] seats = new int[gridLen][1][2];
-        for(int i=0;i<gridLen;i++){
-            for(int j=0;j<1;j++){
-                for(int k=0;k<2;k++){
-                    seats[i][j][k] = intArray[l];
-                    l++;
-                }
-            }
-        }
+        //Making the passenger ID's Array by their Priority wise order
+        passIdArray = PriorityCheck.SeatingOrder(passIdArray);
+//        for (int i : passIdArray){
+//            System.out.print(i+" ");
+//        }
+//        System.out.println();
 
-        //Input = [29,39,1,4,12,5,2]
-        //Taking input for Passenger number
-        String pass = sc.nextLine();
-
-        //Getting the numbers from the passengers Id input and adding to to the PassengerArray
-        int[] PassengerArray = new int[pass.length()];
-        //PassengerArray = [29,39,1,4,12,5,2]
-        index = 0;
-        for(int i=0;i<pass.length();i++){
-            if(pass.charAt(i)>='0' && pass.charAt(i)<='9') {
-                PassengerArray[index] = pass.charAt(i);
-            }
-        }
-
-        AirplaneSeating.AirplaneSeating(PassengerArray);
-
-        //Calling FillSeats functions in their Respective order
-        FillSeats.fillAisleSeats(seats,PassengerArray);
-        FillSeats.fillMWindowSeats(seats,PassengerArray);
-        FillSeats.fillMiddleSeats(seats,PassengerArray);
-
-        
+        FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray);
+        fillSeats.SeatCreation(seatingGroups);
+        fillSeats.fillAisleSeats(passIdArray);
+        fillSeats.fillWindowSeats(passIdArray);
+        fillSeats.fillMiddleSeats(passIdArray);
+        fillSeats.printSeats();
 
     }
 }
