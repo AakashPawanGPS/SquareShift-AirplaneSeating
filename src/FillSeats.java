@@ -40,15 +40,16 @@ public class FillSeats {
         int k = this.seatingGroups[i][0]-1;
         int n = passIdArray.length * 2;
         for(int p=0; p<n;p++){
+            System.out.println("Index: "+index);
             try{
                 if(this.seatingGroups[i][0]>1){
                     String[][] matrix = this.seats.get(i);
-                    matrix[j][k] = Integer.toString(this.passIdArray[index++]);
+                    matrix[j][k] = Integer.toString(this.passIdArray[index]);
+                    index++;
                     this.seats.set(i,matrix);
                 }
             }
-            catch (Exception e){
-            }
+            catch (Exception e){}
             if(k == this.seatingGroups[i][0]-1){
                 i++;
                 k=0;
@@ -72,7 +73,8 @@ public class FillSeats {
         for(int p=0;p<n;p++){
             try{
                 String[][] matrix = this.seats.get(i);
-                matrix[j][k] = Integer.toString(this.passIdArray[index++]);
+                matrix[j][k] = Integer.toString(this.passIdArray[index]);
+                index++;
                 this.seats.set(i,matrix);
             }
             catch (Exception e){}
@@ -97,7 +99,8 @@ public class FillSeats {
         for(int p=0;p<n;p++){
             try{
                 String[][] matrix = this.seats.get(i);
-                matrix[j][k] = Integer.toString(this.passIdArray[index++]);
+                matrix[j][k] = Integer.toString(this.passIdArray[index]);
+                index++;
                 this.seats.set(i,matrix);
                 k++;
             }
