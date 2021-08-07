@@ -31,11 +31,20 @@ public class SquareShift {
 //        }
 //        System.out.println();
 
+//        List<Integer> rows = new ArrayList<>();
+//        List<Integer> cols = new ArrayList<>();
+//        for(int[] block : seatingGroups){
+//            rows.add(block[1]);
+//            cols.add(block[0]);
+//
+//        }
+        //FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray,rows,cols);
         FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray);
         fillSeats.SeatCreation(seatingGroups);
-        fillSeats.fillAisleSeats(passIdArray);
-        fillSeats.fillWindowSeats(passIdArray);
-        fillSeats.fillMiddleSeats(passIdArray);
+
+        int index = fillSeats.fillAisleSeats(passIdArray);
+        index = fillSeats.fillWindowSeats(passIdArray,index);
+        index = fillSeats.fillMiddleSeats(passIdArray,index);
         fillSeats.printSeats();
 
     }
