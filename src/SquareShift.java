@@ -49,8 +49,10 @@ public class SquareShift {
         fillSeats.SeatCreation(seatingGroups);
 
         int index = fillSeats.fillAisleSeats(passIdArray);
-        index = fillSeats.fillWindowSeats(passIdArray,index);
-        index = fillSeats.fillMiddleSeats(passIdArray,index);
+        if(index< passIdArray.length)
+            index = fillSeats.fillWindowSeats(passIdArray,index);
+        if(index< passIdArray.length)
+            index = fillSeats.fillMiddleSeats(passIdArray,index);
         fillSeats.printSeats();
 
     }

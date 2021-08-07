@@ -33,30 +33,33 @@ public class FillSeats {
     }
 
     public int fillAisleSeats(int[] passIdArray){
-        int index = 0;
-        int i=0;
-        int j=0;
-        int k = this.seatingGroups[i][0]-1;
-        int n = passIdArray.length * 2;
+        int block = this.seatingGroups.length;
+        int AisleCol;
+        index=0;
+        for(int row=0; row < maxRows;row++){
+            for(int i=0 ; i<block; i++) {
+                if (this.seatingGroups[i][1] > row) {
+                    if (((i == 0) || (i == block - 1)) && (this.seatingGroups[i][0] > 1)) {
+                        if (i == 0) {
+                            AisleCol = this.seatingGroups[i][0] - 1;
+                        } else {
+                            AisleCol = 0;
+                        }
+                        seats[i][row][AisleCol] = Integer.toString(passIdArray[index++]);
+                    } else {
+                        AisleCol = 0;
+                        seats[i][row][AisleCol] = Integer.toString(this.passIdArray[index]);
+                        index++;
+                        if (index >= passIdArray.length)
+                            break;
+                        if (this.seatingGroups[i][0] > 1) {
+                            AisleCol = this.seatingGroups[i][0] - 1;
+                            seats[i][row][AisleCol] = Integer.toString(passIdArray[index++]);
 
-        for(int p=0; p<n;p++){
-
-            try{
-                if(this.seatingGroups[i][0]>1){
-                    seats[i][j][k] = Integer.toString(this.passIdArray[index]);
-                    index++;
-                }
-            }
-            catch (Exception e){}
-            if(k == this.seatingGroups[i][0]-1){
-                i++;
-                k=0;
-            }
-            else{
-                k = this.seatingGroups[i][0]-1;
-                if(i == this.seatingGroups.length - 1){
-                    i=0;
-                    j++;
+                        }
+                    }
+                    if (index == passIdArray.length)
+                        break;
                 }
             }
         }
@@ -64,49 +67,47 @@ public class FillSeats {
     }
 
     public int fillWindowSeats(int[] passIdArray , int index){
-        int i = 0;
-        int j = 0;
-        int k = 0;
-        int n = this.seatingGroups[i][0]-1;
-        for(int p=0;p<n;p++){
-            try{
-                seats[i][j][k] = Integer.toString(this.passIdArray[index]);
+        int block = this.seatingGroups.length - 1;
+        for(int row=0 ; row<maxRows;row++){
+            if(this.seatingGroups[0][1]>row){
+                seats[0][row][0] = Integer.toString(passIdArray[index++]);
                 index++;
+                if(index >=  passIdArray.length)
+                    break;
             }
-            catch (Exception e){}
-            if(i == 0){
-                i = this.seatingGroups.length - 1;
-                k = this.seatingGroups[i][0]-1;
-            }
-            else {
-                k = 0;
-                i = 0;
-                j++;
+            if(this.seatingGroups[block][1] > row){
+                int window = this.seatingGroups[block][0]-1;
+                seats[this.seatingGroups.length-1][row][window] = Integer.toString(this.passIdArray[index]);
+                index++;
+                if(index>= passIdArray.length)
+                    break;
             }
         }
         return index;
     }
 
     public int fillMiddleSeats(int[] passIdArray ,int index){
-        int i = 0;
-        int j = 0;
-        int k = 1;
-        int n = passIdArray.length * 2;
-        for(int p=0;p<n;p++){
-            try{
-                seats[i][j][k] = Integer.toString(this.passIdArray[index]);
-                index++;
-                k++;
+        int block = this.seatingGroups.length;
+        int j=0;
+        for(int row = 0; row<maxRows; row++){
+            for(int i=0;i<block;i++,j++){
+                if((this.seatingGroups[i][1] > row) && (this.seatingGroups[i][0]>2)){
+                    for(int col=1;col<this.seatingGroups[i][0]-1;col++){
+                        if (this.seatingGroups[i][1] > row)
+                            try {
+                                seats[i][row][col] = Integer.toString(passIdArray[index]);
+                                index++;
+                            }
+                            catch (Exception e){}
+                        if(index >= passIdArray.length)
+                            break;
+                    }
+                }
+                if(index == passIdArray.length)
+                    break;
             }
-            catch (Exception e){}
-            if(k == this.seatingGroups[i][0]-1){
-                i++;
-                k=1;
-            }
-            if(i == this.seatingGroups.length-1){
-                i = 0;
-                j++;
-            }
+            if(index == passIdArray.length)
+                break;
         }
         return index;
     }
@@ -118,7 +119,7 @@ public class FillSeats {
                 for(int k=0;k<seatingGroups[i][0];k++){
                     System.out.print(seats[i][j][k]+" ");
                 }
-                System.out.println(" ");
+                System.out.println(" | ");
             }
             System.out.println("--------------");
         }
