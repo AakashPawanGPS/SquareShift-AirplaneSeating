@@ -1,19 +1,21 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class FillSeats {
 
     private int[][] seatingGroups;
     private int[] passIdArray;
     private int index;
-
-    List<String[][]> seats = new ArrayList<>();
+    private int maxRows;
+    private int maxCols;
+    private String[][][] seats;
     ArrayList<Integer> rows = new ArrayList<>();
 
-    public FillSeats(int[][] seatingGroups , int[] passIdArray){
+    public FillSeats(int[][] seatingGroups , int[] passIdArray , int maxRows , int maxCols){
         this.seatingGroups = seatingGroups;
         this.passIdArray = passIdArray;
+        this.maxRows = maxRows;
+        this.maxCols = maxCols;
+        this.seats = new String[seatingGroups.length][maxRows][maxCols];
     }
 
     public void SeatCreation(int[][] seatingGroups){
@@ -21,15 +23,12 @@ public class FillSeats {
             System.out.print(this.passIdArray[i]+" ");
         }
         System.out.println();
-        for(int block[] : seatingGroups){
-            int noOfRows = block[1];
-            int noOfCols = block[0];
-            String[][] matrix = new String[noOfRows][noOfCols];
-            this.rows.add(noOfRows);
-            String[] row = new String[noOfCols];
-            Arrays.fill(row,"XX");
-            Arrays.fill(matrix,row);
-            this.seats.add(matrix);
+        for(int i=0;i<seatingGroups.length;i++){
+            for(int j=0;j<maxRows;j++){
+                for(int k=0;k<maxCols;k++){
+                    seats[i][j][k] = "XX";
+                }
+            }
         }
     }
 
@@ -39,14 +38,13 @@ public class FillSeats {
         int j=0;
         int k = this.seatingGroups[i][0]-1;
         int n = passIdArray.length * 2;
+
         for(int p=0; p<n;p++){
-            System.out.println("Index: "+index);
+
             try{
                 if(this.seatingGroups[i][0]>1){
-                    String[][] matrix = this.seats.get(i);
-                    matrix[j][k] = Integer.toString(this.passIdArray[index]);
+                    seats[i][j][k] = Integer.toString(this.passIdArray[index]);
                     index++;
-                    this.seats.set(i,matrix);
                 }
             }
             catch (Exception e){}
@@ -72,10 +70,8 @@ public class FillSeats {
         int n = this.seatingGroups[i][0]-1;
         for(int p=0;p<n;p++){
             try{
-                String[][] matrix = this.seats.get(i);
-                matrix[j][k] = Integer.toString(this.passIdArray[index]);
+                seats[i][j][k] = Integer.toString(this.passIdArray[index]);
                 index++;
-                this.seats.set(i,matrix);
             }
             catch (Exception e){}
             if(i == 0){
@@ -98,10 +94,8 @@ public class FillSeats {
         int n = passIdArray.length * 2;
         for(int p=0;p<n;p++){
             try{
-                String[][] matrix = this.seats.get(i);
-                matrix[j][k] = Integer.toString(this.passIdArray[index]);
+                seats[i][j][k] = Integer.toString(this.passIdArray[index]);
                 index++;
-                this.seats.set(i,matrix);
                 k++;
             }
             catch (Exception e){}
@@ -119,14 +113,14 @@ public class FillSeats {
 
 
     public void printSeats(){
-        for(String block[][] : this.seats){
-            for(String rows[] : block){
-                for(String seat : rows){
-                    System.out.print(seat+" ");
+        for(int i=0;i<seatingGroups.length;i++){
+            for(int j=0;j<seatingGroups[i][1];j++){
+                for(int k=0;k<seatingGroups[i][0];k++){
+                    System.out.print(seats[i][j][k]+" ");
                 }
-                System.out.println(" | ");
+                System.out.println(" ");
             }
-            System.out.println("------------");
+            System.out.println("--------------");
         }
     }
 }

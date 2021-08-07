@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class SquareShift {
@@ -31,15 +34,18 @@ public class SquareShift {
 //        }
 //        System.out.println();
 
-//        List<Integer> rows = new ArrayList<>();
-//        List<Integer> cols = new ArrayList<>();
-//        for(int[] block : seatingGroups){
-//            rows.add(block[1]);
-//            cols.add(block[0]);
-//
-//        }
+        List<Integer> rows = new ArrayList<>();
+        List<Integer> cols = new ArrayList<>();
+
+        for(int[] block : seatingGroups){
+            rows.add(block[1]);
+            cols.add(block[0]);
+
+        }
+        int maxRows = Collections.max(rows);
+        int maxCols = Collections.max(cols);
         //FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray,rows,cols);
-        FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray);
+        FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray,maxRows,maxCols);
         fillSeats.SeatCreation(seatingGroups);
 
         int index = fillSeats.fillAisleSeats(passIdArray);
