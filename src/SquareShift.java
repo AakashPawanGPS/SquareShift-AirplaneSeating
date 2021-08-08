@@ -44,11 +44,13 @@ public class SquareShift {
         }
         int maxRows = Collections.max(rows);
         int maxCols = Collections.max(cols);
-        //FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray,rows,cols);
+
         FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray,maxRows,maxCols);
         fillSeats.SeatCreation(seatingGroups);
 
-        int index = fillSeats.fillAisleSeats(passIdArray);
+        int index = 0;
+        if(index< passIdArray.length)
+            index = fillSeats.fillAisleSeats(passIdArray,index);
         if(index< passIdArray.length)
             index = fillSeats.fillWindowSeats(passIdArray,index);
         if(index< passIdArray.length)
