@@ -48,14 +48,14 @@ public class SquareShift {
         FillSeats fillSeats = new FillSeats(seatingGroups,passIdArray,maxRows,maxCols);
         fillSeats.SeatCreation(seatingGroups);
 
-        int index = 0;
-        if(index< passIdArray.length)
-            index = fillSeats.fillAisleSeats(passIdArray,index);
+        int index = fillSeats.fillAisleSeats(passIdArray);
         if(index< passIdArray.length)
             index = fillSeats.fillWindowSeats(passIdArray,index);
         if(index< passIdArray.length)
             index = fillSeats.fillMiddleSeats(passIdArray,index);
         fillSeats.printSeats();
-
+//        if(index< passIdArray.length){
+//            System.out.println("No more Empty Seats");
+//        }
     }
 }
