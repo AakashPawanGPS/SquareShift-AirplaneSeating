@@ -47,7 +47,10 @@ public class FillSeats {
                                     index++;
                                 }
                                 catch (Exception e){
-                                    //System.out.println("Index: "+index);
+//                                    System.out.println("Index: "+index +
+//                                                       " i : "+i +
+//                                                       " row : "+row+
+//                                                       " Aislecol : "+AisleCol);
                                 }
                             } else {
                                 AisleCol = 0;
@@ -56,7 +59,10 @@ public class FillSeats {
                                     index++;
                                 }
                                 catch (Exception e){
-                                    //System.out.println("Index : " + index);
+//                                    System.out.println("Index: "+index +
+//                                                       " i : "+i +
+//                                                       " row : "+row+
+//                                                       " Aislecol : "+AisleCol);
                                 }
                             }
                         }
@@ -68,7 +74,10 @@ public class FillSeats {
                             index++;
                         }
                         catch (Exception e){
-                            //System.out.println("Index : "+index);
+//                            System.out.println("Index: "+index +
+//                                                       " i : "+i +
+//                                                       " row : "+row+
+//                                                       " Aislecol : "+AisleCol);
                         }
                         if (this.seatingGroups[i][0] > 1) {
                             AisleCol = this.seatingGroups[i][0]-1;
@@ -77,14 +86,21 @@ public class FillSeats {
                                 index++;
                             }
                             catch (Exception e){
-                                //System.out.println("Index : " + index);
+//                            System.out.println("Index: "+index +
+//                                                       " i : "+i +
+//                                                       " row : "+row+
+//                                                       " Aislecol : "+AisleCol);
                             }
-                        if (index >= passIdArray.length)
+                        if (index >= passIdArray.length){
+                            System.out.println("Seats already filled");
+                        }
                             break;
                         }
                     }
-                    if (index == passIdArray.length)
+                    if (index >= passIdArray.length) {
+                        System.out.println("Seats already filled");
                         break;
+                    }
                 }
             }
         }
@@ -97,8 +113,10 @@ public class FillSeats {
             if(this.seatingGroups[0][1]>row){
                 seats[0][row][0] = Integer.toString(passIdArray[index]);
                 index++;
-                if(index >=  passIdArray.length)
+                if(index >=  passIdArray.length) {
+                    System.out.println("Seats already filled");
                     break;
+                }
             }
             if(this.seatingGroups[block][1] > row){
                 int window = this.seatingGroups[block][0]-1;
@@ -109,8 +127,10 @@ public class FillSeats {
                 catch (Exception e){
                     //System.out.println("Index : " + index);
                 }
-                if(index>= passIdArray.length)
+                if(index>= passIdArray.length) {
+                    System.out.println("Seats already filled");
                     break;
+                }
             }
         }
         return index;
@@ -131,15 +151,21 @@ public class FillSeats {
                             catch (Exception e) {
                                 //System.out.println("Index : " + index);
                             }
-                        if(index >= passIdArray.length)
+                        if(index >= passIdArray.length) {
+                            System.out.println("Seats already filled");
                             break;
+                        }
                     }
                 }
-                if(index == passIdArray.length)
+                if(index >= passIdArray.length) {
+                    System.out.println("Seats already filled");
                     break;
+                }
             }
-            if(index == passIdArray.length)
+            if(index >= passIdArray.length) {
+                System.out.println("Seats already filled");
                 break;
+            }
         }
         return index;
     }
